@@ -1,0 +1,22 @@
+server {
+        listen 80;
+        listen [::]:80;
+        # responses are too small to benefit anything from gzip; hence it's a waste of cpu.
+        gzip off;
+        server_name ip.loltek.net www.ip.loltek.net;
+        default_type text/plain;
+        location / {
+                # tell CLOUDFLARE not to cache it. dont really care if the client cache it or not.
+                add_header Cache-Control "no-cache, no-store";
+                #return 200 "$remote_addr";
+                return 200 "$http_CF_Connecting_IP";
+        }
+
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/rawgit.loltek.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/rawgit.loltek.net/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
