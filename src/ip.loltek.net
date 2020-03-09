@@ -8,8 +8,12 @@ server {
         location / {
                 # tell CLOUDFLARE not to cache it. dont really care if the client cache it or not.
                 add_header Cache-Control "no-cache, no-store";
-                #return 200 "$remote_addr";
-                return 200 "$http_CF_Connecting_IP";
+                if ($http_CF_Connecting_IP ~ ^. ) {
+                        # cloudflare
+                        return 200 "$http_CF_Connecting_IP";
+                }
+                # direct
+                return 200 "$remote_addr";
         }
 
     listen [::]:443 ssl; # managed by Certbot
