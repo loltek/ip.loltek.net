@@ -12,6 +12,11 @@ server {
                         # cloudflare
                         return 200 "$http_CF_Connecting_IP";
                 }
+                if ($http_Fastly_Client_IP ~ ^. ) {
+                        # Fastly
+                        return 200 "$http_Fastly_Client_IP";
+                }
+                
                 # direct
                 return 200 "$remote_addr";
         }
