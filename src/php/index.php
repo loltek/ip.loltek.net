@@ -23,7 +23,7 @@ function defaultHeaders()
     header("Content-Type: text/plain; charset=utf-8");
     // header("Content-Encoding: identity");
     header("server: "); // << doesn't work
-    header("Cache-Control: no-cache");
+    header("Cache-Control: no-cache, no-transform");
     //header("expires:");
 }
 defaultHeaders();
